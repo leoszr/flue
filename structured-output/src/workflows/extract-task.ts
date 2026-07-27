@@ -7,10 +7,10 @@ const inputSchema = v.object({
 })
 
 const taskSchema = v.object({
-  title: v.pipe(v.string(), v.minLength(1), v.maxLength(2000)),
+  title: v.pipe(v.string(), v.minLength(1), v.maxLength(100)),
   priority: v.picklist(["low", "medium", "high"]),
-  asignee: v.nullable(v.string(), "teste"),
-  dueDate: v.nullable(v.date(), () => new Date())
+  assignee: v.nullable(v.string()),
+  dueDate: v.nullable(v.string())
 })
 
 export default defineWorkflow({})
