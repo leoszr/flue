@@ -13,4 +13,8 @@ const taskSchema = v.object({
   dueDate: v.nullable(v.string())
 })
 
+const agent = defineAgent(() => ({
+  model: "deepseek/deepseek-v4-flash"
+}))
+
 export default defineWorkflow({})
