@@ -22,10 +22,31 @@ export default defineWorkflow({
   input: inputSchema,
   output: taskSchema,
 
-  async run({harness, input}) {
+  async run({ harness, input }) {
     const session = await harness.session()
-    const response = await session.prompt(`retorne essas informaçoes:${input.text} - em formato JSON, seguindo o schema pedido`)
-    const output: unknown = JSON.parse(response.text)
-    return { output }
+    const response = await session.prompt(`Retorne somente JSON válido, sem markdown ou explicações.
+
+    Formato:
+    {
+      "title": string,
+      "priority": "low" | "medium" | "high",
+      "assignee": string | null,
+      "dueDate": string | null
+    } - segue o prompt a ser formatado: ${input.text}`)
+    try {
+      const candidate: unknown = JSON.parse(response.text)
+      const result = v.safeParse(taskSchema, candidate)
+          if (!result.success) {
+            throw new Error("resposta nao segue o schema")
+          }
+    } catch (e: unknown){
+      if (e instanceof Error) {
+       console.error("Erro ao analisar JSON:", e.message)
+     }
+    }
+
+
+
+    return { }
   }
 })
