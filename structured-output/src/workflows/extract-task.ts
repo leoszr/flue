@@ -39,14 +39,15 @@ export default defineWorkflow({
           if (!result.success) {
             throw new Error("resposta nao segue o schema")
           }
+          return result.output
     } catch (e: unknown){
       if (e instanceof Error) {
-       console.error("Erro ao analisar JSON:", e.message)
-     }
+        throw new Error(`falha ao processar resposta ${e.message}`)
+      }
+      throw new Error("erro desconhecido ao processar resposta")
     }
 
 
 
-    return { }
   }
 })
