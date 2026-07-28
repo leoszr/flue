@@ -25,7 +25,7 @@ export default defineWorkflow({
   async run({harness, input}) {
     const session = await harness.session()
     const response = await session.prompt(`retorne essas informaçoes:${input.text} - em formato JSON, seguindo o schema pedido`)
-    const output = JSON.parse(response.text)
+    const output: unknown = JSON.parse(response.text)
     return { output }
   }
 })
