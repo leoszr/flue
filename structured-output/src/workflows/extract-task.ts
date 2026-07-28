@@ -17,4 +17,17 @@ const agent = defineAgent(() => ({
   model: "deepseek/deepseek-v4-flash"
 }))
 
-export default defineWorkflow({})
+export default defineWorkflow({
+  agent,
+  input: inputSchema,
+  output: taskSchema,
+
+  async run(ctx) {
+    return {
+      title: "teste",
+      priority: "low",
+      assignee: "leo",
+      dueDate: "2026-7-14"
+  }
+  }
+})
