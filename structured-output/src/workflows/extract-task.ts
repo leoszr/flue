@@ -22,12 +22,15 @@ export default defineWorkflow({
   input: inputSchema,
   output: taskSchema,
 
-  async run(ctx) {
+  async run({harness, input}) {
+    const session = await harness.session()
+    const response = await session.prompt(input.text)
+
     return {
-      title: "teste",
-      priority: "low",
-      assignee: "leo",
-      dueDate: "2026-7-14"
-  }
+        title: "teste",
+        priority: "low",
+        assignee: "leo",
+        dueDate: "2026-07-14"
+      }
   }
 })
